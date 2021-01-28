@@ -17,6 +17,21 @@ class User < ApplicationRecord
   has_many :reverse_of_relationships, class_name: 'Relationship', foreign_key: 'follow_id'
   has_many :followers, through: :reverse_of_relationships, source: :user
 
+  #住所自動入力
+  #都道府県コードから都道府県名に自動で変換する。
+  include JpPrefecture
+  jp_prefecture :prefecture_code
+
+  #~.prefecture_nameで都道府県名を参照出来る様にする。
+  #例) @user.prefecture_nameで該当ユーザーの住所(都道府県)を表示出来る
+  def prefecrture_name
+    JpPrefecture::Prefecture.find(code: prefecture_code).try(:name)
+  end
+  def prefecture_name=(prefecture_name)
+    self.prefecture_code = JpPrefecture::Prefecture.find(name: prefecture_name).code
+    
+  end
+
   def follow(other_user)
     # フォローしようとしている other_user が自分自身ではないかを検証
     unless self == other_user
