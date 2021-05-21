@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  #mailerのrouting設定
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
   devise_for :users
   get 'index' => 'homes#index'
   root 'homes#index'

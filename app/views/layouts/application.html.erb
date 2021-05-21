@@ -15,9 +15,6 @@
 
     <% if user_signed_in? %>
   <body>
-      <br>
-      <br>
-      <br>
       <header class="navbar navbar-fixed-top navbar-inverse">
         <div class="container">
           <nav class="nav navbar-nav navbar-left"></nav>
@@ -48,11 +45,20 @@
         </div>
       </header>
     <% end %>
-    <% if flash[:notice] %>
-     <div class="flash">
-       <%= flash[:notice] %>
-     </div>
-    <% end %>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs3 ">
+          <% if flash[:notice] %>
+             <div class="flash">
+               <%= flash[:notice] %>
+             </div>
+          <% end %>
+        </div>
+       </div>
+    </div>
     <main>
        <%= yield %>
     </main>
