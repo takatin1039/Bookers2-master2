@@ -17,6 +17,9 @@ class User < ApplicationRecord
   has_many :reverse_of_relationships, class_name: 'Relationship', foreign_key: 'follow_id'
   has_many :followers, through: :reverse_of_relationships, source: :user
 
+  has_many :user_rooms, dependent: :destroy
+  has_many :chats, dependent: :destroy
+
   #住所自動入力
   #都道府県コードから都道府県名に自動で変換する。
   include JpPrefecture

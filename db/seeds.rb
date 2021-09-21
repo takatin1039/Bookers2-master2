@@ -5,3 +5,18 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+User.create!(
+	id:1,
+	email: 'yoshio@icloud.com',
+	name: '小島よしお',
+	postcode: '5555555',
+	prefecture_code: '1',
+	address_city: '北海道市',
+	address_street: '北海道町1-1-1',
+	address_building: 'セレソ北海道202',
+	password: 'k883078k',
+	#devise を Confimable で使用しているためconfirmeしとく
+	confirmed_at: Time.now
+
+)
+
