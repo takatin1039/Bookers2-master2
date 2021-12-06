@@ -1,0 +1,65 @@
+  
+<h2>User info</h2>
+<%= attachment_image_tag user, :profile_image, class: "img-circle pull-left profile-thumb", fallback: "no_image.jpg", size: "60x60" %>
+<table class="table">
+  <tbody>
+    <tr>
+        <th>name</th>
+        <th><%= user.name %></th>
+    </tr>
+    <tr>
+        <th>introduction</th>
+        <th><%= user.introduction %></th>
+    </tr>
+    <tr>
+        <th>follows</th>
+        <th><%= link_to user.followings.count ,user_follows_path(user) %></th>
+    </tr>
+    <tr>
+        <th>followers</th>
+        <th><%= link_to user.followers.count ,user_followers_path(user) %></th>
+    </tr>
+  </tbody>
+</table>
+<div class="row text-center">
+ <%= link_to edit_user_path(current_user) do %>
+<button class="glyphicon glyphicon-wrench col-xs-12" aria-hidden="true"></button>
+ <% end %>
+ <hr>
+<div class="pull-left">
+ <% unless current_user == user %>
+  <% if current_user.following?(user) %>
+    <%= form_for(current_user.relationships.find_by(follow_id: user.id),html:{ method: :delete }) do |f| %>
+      <%= hidden_field_tag :follow_id, user.id %>
+      <%= f.submit 'Unfollow', class:'btn btn-danger' %>
+    <% end %>
+  <% else %>
+    <%= form_for(current_user.relationships.build) do |f| %>
+      <%= hidden_field_tag :follow_id, user.id %>
+      <%= f.submit 'Follow', class:'btn btn-primary' %>
+    <% end %>
+  <% end %>
+<% end %>
+</div>
+</div>
+
+
+<h2>New book</h2>
+
+<%= form_for(book) do |f| %>
+  <%#= render 'devise/shared/error_messages', model: f.object %>
+  <div class="field row">
+    <h4>Title</h4>
+    <%= f.text_field :title, class: "col-xs-12 book_title"%>
+  </div>
+  <div class="field row">
+    <h4>Opinion</h4>
+
+    <%= f.text_area :body, class: "col-xs-12 book_body" %>
+    <br>
+  </div>
+  <div class="actions row">
+      <%= f.submit 'Create Book',class: "btn btn-primary col-xs-12"%>
+     <br>
+  </div>
+<% end %>
